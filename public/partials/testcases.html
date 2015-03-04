@@ -1,7 +1,27 @@
-Search: <input type="text" ng-model="search.name">
-<ul>
-    <li ng-repeat="todo in todos | filter: search">
-        <a ng-show="!editing[$index]" href="#/testcases/{{todo._id}}">{{todo.name}}</a>
-        <button ng-show="!editing[$index]" ng-click="remove($index)">remove</button>
-    </li>
-</ul>
+<div class="container" ng-include="'partials/filter.html'" ng-controller="FilterController"></div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="testcasesSearch">Search</label>
+                <input type="text" class="form-control" id="testcasesSearch" placeholder="Name" ng-model="search.name">
+            </div>
+        </form>
+    </div>
+</div>
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Environment</th>
+        <th>Build id</th>
+    </tr>
+    <tr ng-repeat="testcase in data.testcases | filter: search">
+        <td><a href="#/testcases/{{testcase._id}}" target="_blank">{{testcase.name}}</a>
+            <button ng-show="!editing[$index]" ng-click="remove($index)" class="btn-link">remove</button>
+        </td>
+        <td ng-class="testcase.status=='pass'?'text-success' : 'text-danger'">{{testcase.status}}</td>
+        <td>{{testcase.environment}}</td>
+        <td>{{testcase.build_id}}</td>
+    </tr>
+</table>

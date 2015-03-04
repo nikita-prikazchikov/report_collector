@@ -1,3 +1,4 @@
+<div class="container" ng-include="'partials/filter.html'" ng-controller="FilterController"></div>
 <div class="container">
     <div class="row" ng-repeat="environment in data2">
         <div class="panel" ng-class="environment.status=='pass'? 'panel-success' : 'panel-danger'">
@@ -21,7 +22,7 @@
                 <ul class="list-group list-unstyled">
                     <li class="list-group-item"><strong>Failed test cases list</strong></li>
                     <li class="list-group-item" ng-repeat="testCase in environment.fails">
-                        {{testCase.name}}
+                        <a href="#/testcases/{{testCase._id}}" target="_blank">{{testCase.name}}</a>
                     </li>
                 </ul>
             </div>
