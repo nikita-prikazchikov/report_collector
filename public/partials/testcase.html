@@ -1,0 +1,84 @@
+<h2>{{testcase.name}}</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>Feature</dt>
+                            <dd>{{testcase.feature}}</dd>
+
+                            <dt>Tags</dt>
+                            <dd>{{testcase.tags}}</dd>
+
+                            <dt>Status</dt>
+                            <dd>{{testcase.status}}</dd>
+
+                            <dt>Environment</dt>
+                            <dd>{{testcase.environment}}</dd>
+
+                            <dt>Project</dt>
+                            <dd>{{testcase.project}}</dd>
+
+                            <dt>Functionality</dt>
+                            <dd>{{testcase.functionality}}</dd>
+
+                            <dt>Start time</dt>
+                            <dd>{{testcase.start_time | date:'medium'}}</dd>
+
+                            <dt>End time</dt>
+                            <dd>{{testcase.end_time | date:'medium'}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>Release</dt>
+                            <dd>{{testcase.release}}</dd>
+
+                            <dt>Build id</dt>
+                            <dd>{{testcase.build_id}}</dd>
+
+                            <dt>Job name</dt>
+                            <dd>{{testcase.job_name}}</dd>
+
+                            <dt>Build url</dt>
+                            <dd><a href="{{testcase.build_url}}" target="_blank">{{testcase.build_url}}</a></dd>
+
+                            <dt>Build number</dt>
+                            <dd>{{testcase.build_number}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="step in testcase.steps"
+                ng-class="step.status=='fail'?'list-group-item-danger':''">
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4 class="list-group-item-heading">{{step.name}}</h4>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="{{step.screenshot}}" target="_blank" style="color: inherit;" ng-show="step.screenshot!=''"><span class="glyphicon glyphicon-picture"></span></a>
+                    </div>
+                </div>
+
+                <p class="list-group-item-text">{{step.description}}</p>
+
+                <div ng-show="step.error!=''">
+                    <h3>Error:</h3>
+                    <blockquote>
+                        <p>{{step.error}}</p>
+                    </blockquote>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

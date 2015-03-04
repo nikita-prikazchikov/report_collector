@@ -1,0 +1,7 @@
+Search: <input type="text" ng-model="search.name">
+<ul>
+    <li ng-repeat="todo in todos | filter: search">
+        <a ng-show="!editing[$index]" href="#/testcases/{{todo._id}}">{{todo.name}}</a>
+        <button ng-show="!editing[$index]" ng-click="remove($index)">remove</button>
+    </li>
+</ul>
