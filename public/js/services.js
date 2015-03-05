@@ -5,7 +5,7 @@
 var reportServices = angular.module('reportServices', ['ngResource']);
 
 reportServices.factory('TestCases', ['$resource', function ($resource) {
-    return $resource('/testcases/:id', null, {});
+    return $resource('/api/testcases/:id', null, {});
 }]);
 
 reportServices.factory("TestCaseFactory", ['TestCases', function (TestCases) {
@@ -19,3 +19,11 @@ reportServices.factory("TestCaseFactory", ['TestCases', function (TestCases) {
         }
     };
 }]);
+
+reportServices.factory("VisibilityFactory", function (TestCases) {
+    return {
+        data: {
+            filter: true
+        }
+    };
+});

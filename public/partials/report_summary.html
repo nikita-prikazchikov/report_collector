@@ -1,6 +1,7 @@
-<div class="container" ng-include="'partials/filter.html'" ng-controller="FilterController"></div>
+<div class="container" ng-include="'/partials/filter.html'"></div>
+
 <div class="container">
-    <div class="row" ng-repeat="environment in data2">
+    <div class="row" ng-repeat="environment in data.table_data">
         <div class="panel" ng-class="environment.status=='pass'? 'panel-success' : 'panel-danger'">
             <div class="panel-heading">
                 <h3 class="panel-title">{{environment.name}}</h3>
@@ -11,9 +12,9 @@
                         <td><strong>{{line.project}}</strong></td>
                         <td>{{line.functionality}}</td>
                         <td>
-                            <span ng-class="line.status=='pass'? 'label label-success' : 'label label-danger'">{{line.status}}</span>
-                            <span class="label label-success" ng-show="line.pass">{{line.pass}}</span>
-                            <span class="label label-danger" ng-show="line.fail">{{line.fail}}</span>
+                            <!--<span ng-class="line.status=='pass'? 'label label-success' : 'label label-danger'">{{line.status}}</span>-->
+                            <a href="/testcases{{line.href_pass}}" target="_blank"><span class="label label-success" ng-show="line.pass">{{line.pass}}</span></a>
+                            <a href="/testcases{{line.href_fail}}" target="_blank"><span class="label label-danger" ng-show="line.fail">{{line.fail}}</span></a>
                         </td>
                     </tr>
                 </table>
@@ -22,7 +23,7 @@
                 <ul class="list-group list-unstyled">
                     <li class="list-group-item"><strong>Failed test cases list</strong></li>
                     <li class="list-group-item" ng-repeat="testCase in environment.fails">
-                        <a href="#/testcases/{{testCase._id}}" target="_blank">{{testCase.name}}</a>
+                        <a href="/testcases/{{testCase._id}}" target="_blank">{{testCase.name}}</a>
                     </li>
                 </ul>
             </div>

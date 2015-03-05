@@ -4,72 +4,52 @@
 
 var reportControllers = angular.module('reportControllers', []);
 
-reportControllers.controller('TestCasesController', ['$scope', 'TestCaseFactory', function ($scope, TestCaseFactory) {
-    $scope.editing = [];
-    $scope.data = TestCaseFactory.data;
+reportControllers.controller('HeaderController', ['$scope', '$location', 'VisibilityFactory',
+    function ($scope, $location, VisibilityFactory) {
+        $scope.$location = $location;
+        $scope.toggleFilter = function () {
+            VisibilityFactory.data.filter = !VisibilityFactory.data.filter;
+        }
+    }]);
 
-    $scope.save = function () {
-        if (!$scope.newtestcase || $scope.newtestcase.length < 1) return;
-        var testcase = new TestCases({name: $scope.newtestcase, completed: false});
+reportControllers.controller('TestCasesController', ['$scope', 'TestCaseFactory', 'VisibilityFactory',
+    function ($scope, TestCaseFactory, VisibilityFactory) {
+        $scope.visibility = VisibilityFactory.data;
+        $scope.data = TestCaseFactory.data;
 
-        testcase.$save(function () {
-            $scope.testcases.push(testcase);
-            $scope.newtestcase = ''; // clear textbox
-        });
-    };
-
-    $scope.update = function (index) {
-        var testcase = $scope.testcases[index];
-        TestCases.update({id: testcase._id}, testcase);
-        $scope.editing[index] = false;
-    };
-
-    $scope.edit = function (index) {
-        $scope.editing[index] = angular.copy($scope.testcases[index]);
-    };
-
-    $scope.cancel = function (index) {
-        $scope.testcases[index] = angular.copy($scope.editing[index]);
-        $scope.editing[index] = false;
-    };
-    $scope.remove = function (index) {
-        var testcase = $scope.testcases[index];
-        TestCases.remove({id: testcase._id}, function () {
-            $scope.testcases.splice(index, 1);
-        });
-    }
-}]);
+        $scope.remove = function (index) {
+            var testcase = $scope.testcases[index];
+            TestCases.remove({id: testcase._id}, function () {
+                $scope.testcases.splice(index, 1);
+            });
+        }
+    }]);
 
 reportControllers.controller('TestCaseController', ['$scope', '$routeParams', 'TestCases', '$location', function ($scope, $routeParams, TestCases, $location) {
     $scope.testcase = TestCases.get({id: $routeParams.id});
 }]);
 
-reportControllers.controller('FilterController', ['$scope', '$routeParams', 'TestCaseFactory', '$location', function ($scope, $routeParams, TestCaseFactory, $location) {
-    $scope.filter = {
-        name         : $routeParams.name || "",
-        status       : $routeParams.status || "",
-        tags         : $routeParams.tags || "",
-        job_name     : $routeParams.job_name || "",
-        build_id     : $routeParams.build_id || "",
-        feature      : $routeParams.feature || "",
-        environment  : $routeParams.environment || "",
-        project      : $routeParams.project || "",
-        functionality: $routeParams.functionality || "",
-        release      : $routeParams.release || ""
-    };
+reportControllers.controller('FilterController',
+    ['$scope', '$routeParams', 'TestCaseFactory', '$location', 'VisibilityFactory',
+        function ($scope, $routeParams, TestCaseFactory, $location, VisibilityFactory) {
+            $scope.visibility = VisibilityFactory.data;
+            $scope.filter = new SearchFilter($routeParams);
 
-    $scope.setStatus = function (value) {
-        $scope.filter.status = value;
-    };
+            $scope.applyFilter = function () {
+                var filter = $scope.filter.removeEmpty();
+                $location.search(filter);
+                TestCaseFactory.getData(filter);
+            };
 
-    $scope.applyFilter = function () {
-        var f = angular.copy($scope.filter);
-        for (var k in f) {
-            if (!f[k]) delete f[k];
-        }
-        TestCaseFactory.getData(f);
-    };
-}]);
+            if ($scope.filter.isEmpty()) {
+                if (!$scope.data.testcases.length) {
+                    $scope.applyFilter();
+                }
+            }
+            else {
+                VisibilityFactory.data.filter = true;
+            }
+        }]);
 
 //$scope.editing = [];
 //$scope.testcases = TestCases.query();
@@ -105,13 +85,16 @@ reportControllers.controller('FilterController', ['$scope', '$routeParams', 'Tes
 //    });
 //}
 
-reportControllers.controller('SummaryReportController', ['$scope', 'TestCases',
-        function ($scope, TestCases) {
-            var testcases = TestCases.query(function () {
-                $scope.data = getTestCasesTree(testcases);
-                $scope.data2 = formatTestCasesOutput($scope.data);
-            });
+reportControllers.controller('SummaryReportController',
+    ['$scope', '$routeParams', 'TestCaseFactory',
+        function ($scope, $routeParams, TestCaseFactory) {
+            $scope.data = TestCaseFactory.data;
+            $scope.filter = new SearchFilter($routeParams);
 
-            $scope.testcases = testcases;
-        }]
+            $scope.data.table_data = formatTestCasesOutputTableForSummaryReport(TestCaseFactory.data.testcases, $scope.filter);
+            $scope.$watch('data.testcases', function () {
+                $scope.data.table_data = formatTestCasesOutputTableForSummaryReport(TestCaseFactory.data.testcases, $scope.filter);
+            });
+        }
+    ]
 );

@@ -41,6 +41,7 @@ router.get('/', function (req, res, next) {
     if (req.query.release) {
         query.where("release").equals(req.query.release)
     }
+    query.limit(1000);
     query.exec(function (err, todos) {
         if (err) return next(err);
         res.json(todos);

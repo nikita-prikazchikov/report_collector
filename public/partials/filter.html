@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-show="visibility.filter" ng-controller="FilterController">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Filter test cases</h3>
@@ -8,63 +8,63 @@
             <div class="form-group">
                 <label for="filterBuildId" class="col-md-2 control-label">Build id</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="filterBuildId" ng-model="filter.build_id">
+                    <input type="text" class="form-control" id="filterBuildId" ng-model="filter.data.build_id">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="filterName" class="col-md-2 control-label">Name</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="filterName" ng-model="filter.name">
+                    <input type="text" class="form-control" id="filterName" ng-model="filter.data.name">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="filterTags" class="col-md-2 control-label">Tags</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="filterTags" ng-model="filter.tags">
+                    <input type="text" class="form-control" id="filterTags" ng-model="filter.data.tags">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="filterJobName" class="col-md-2 control-label">Job Name</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="filterJobName" ng-model="filter.job_name">
+                    <input type="text" class="form-control" id="filterJobName" ng-model="filter.data.job_name">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="filterFeature" class="col-md-2 control-label">Feature</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="filterFeature" ng-model="filter.feature">
+                    <input type="text" class="form-control" id="filterFeature" ng-model="filter.data.feature">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="filterEnvironment" class="col-md-2 control-label">Environment</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="filterEnvironment" ng-model="filter.environment">
+                    <input type="text" class="form-control" id="filterEnvironment" ng-model="filter.data.environment">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="filterProject" class="col-md-2 control-label">Project</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="filterProject" ng-model="filter.project">
+                    <input type="text" class="form-control" id="filterProject" ng-model="filter.data.project">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="filterFunctionality" class="col-md-2 control-label">Functionality</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="filterFunctionality" ng-model="filter.functionality">
+                    <input type="text" class="form-control" id="filterFunctionality" ng-model="filter.data.functionality">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="filterRelease" class="col-md-2 control-label">Release</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="filterRelease" ng-model="filter.release">
+                    <input type="text" class="form-control" id="filterRelease" ng-model="filter.data.release">
                 </div>
             </div>
 
@@ -73,21 +73,21 @@
                 <div class="col-md-10">
                     <div class="dropdown" id="filterStatus">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuStatus" data-toggle="dropdown" aria-expanded="true">
-                            {{filter.status==""?"Any":filter.status}}
+                            {{filter.data.status==""?"Any":filter.data.status}}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuStatus">
-                            <li><a role="menuitem" tabindex="-1" ng-click="setStatus('');">Any</a></li>
-                            <li><a role="menuitem" tabindex="-1" ng-click="setStatus('pass');">Pass</a></li>
-                            <li><a role="menuitem" tabindex="-1" ng-click="setStatus('fail');">Fail</a></li>
+                            <li><a role="menuitem" tabindex="-1" ng-click="filter.setStatus('');">Any</a></li>
+                            <li><a role="menuitem" tabindex="-1" ng-click="filter.setStatus('pass');">Pass</a></li>
+                            <li><a role="menuitem" tabindex="-1" ng-click="filter.setStatus('fail');">Fail</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <div class="col-md-offset-10 col-md-2">
-                    <button type="submit" class="btn btn-default" ng-click="applyFilter();">Apply</button>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-default pull-right" ng-click="applyFilter();">Apply</button>
                 </div>
             </div>
         </form>
