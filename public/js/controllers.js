@@ -16,13 +16,6 @@ reportControllers.controller('TestCasesController', ['$scope', 'TestCaseFactory'
     function ($scope, TestCaseFactory, VisibilityFactory) {
         $scope.visibility = VisibilityFactory.data;
         $scope.data = TestCaseFactory.data;
-
-        $scope.remove = function (index) {
-            var testcase = $scope.testcases[index];
-            TestCases.remove({id: testcase._id}, function () {
-                $scope.testcases.splice(index, 1);
-            });
-        }
     }]);
 
 reportControllers.controller('TestCaseController', ['$scope', '$routeParams', 'TestCases', '$location', function ($scope, $routeParams, TestCases, $location) {

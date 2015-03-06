@@ -58,7 +58,7 @@ router.post('/', function (req, res, next) {
 
 /* GET /testcases/id */
 router.get('/:id', function (req, res, next) {
-    TestCase.findById(req.params.id, function (err, post) {
+    TestCase.findById(req.params.id, '+steps', function (err, post) {
         if (err) return next(err);
         res.json(post);
     });

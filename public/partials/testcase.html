@@ -66,13 +66,13 @@
                         <h4 class="list-group-item-heading">{{step.name}}</h4>
                     </div>
                     <div class="col-md-1">
-                        <a href="{{step.screenshot}}" target="_blank" style="color: inherit;" ng-show="step.screenshot!=''"><span class="glyphicon glyphicon-picture"></span></a>
+                        <a href="{{step.screenshot}}" target="_blank" style="color: inherit;" ng-show="step.screenshot && step.screenshot!=''"><span class="glyphicon glyphicon-picture"></span></a>
                     </div>
                 </div>
 
                 <p class="list-group-item-text">{{step.description}}</p>
 
-                <div ng-show="step.error!=''">
+                <div ng-show="step.error && step.error!=''">
                     <h3>Error:</h3>
                     <blockquote>
                         <p>{{step.error}}</p>

@@ -25,7 +25,7 @@ var TestCaseSchema = new mongoose.Schema({
     environment: String,
     project: String,
     functionality: String,
-    steps: [TestStepSchema]
+    steps: {type: [TestStepSchema], select: false }
 });
 
 module.exports = mongoose.model('TestCase', TestCaseSchema);
