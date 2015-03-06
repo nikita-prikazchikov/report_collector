@@ -19,7 +19,27 @@ reportControllers.controller('TestCasesController', ['$scope', 'TestCaseFactory'
     }]);
 
 reportControllers.controller('TestCaseController', ['$scope', '$routeParams', 'TestCases', '$location', function ($scope, $routeParams, TestCases, $location) {
-    $scope.testcase = TestCases.get({id: $routeParams.id});
+    $scope.testcase = TestCases.get({id: $routeParams.id}, function () {
+        for (var i = 0; i < $scope.testcase.steps.length; i++) {
+            var step = $scope.testcase.steps[i];
+            if (step.description && step.description.indexOf("|") != -1) {
+                step.description_data = [];
+                var rows = step.description.trim().split('\r\n');
+                for (var j = 0; j < rows.length; j++) {
+                    step.description_data.push(rows[j].trim().replace(/^\||\|$/, "").split("|"))
+                }
+            }
+            if (step.error && step.error.indexOf("|") != -1) {
+                var idx = step.error.indexOf("|");
+                step.error_data = [];
+                rows = step.error.substring(idx).split('\r\n');
+                for (j = 0; j < rows.length; j++) {
+                    step.error_data.push(rows[j].trim().replace(/^\||\|$/, "").split("|"))
+                }
+                step.error = step.error.substring(0, idx);
+            }
+        }
+    });
 }]);
 
 reportControllers.controller('FilterController',

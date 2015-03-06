@@ -1,6 +1,6 @@
 <h2>{{testcase.name}}</h2>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="step in testcase.steps"
                 ng-class="step.status=='fail'?'list-group-item-danger':''">
@@ -70,12 +70,22 @@
                     </div>
                 </div>
 
-                <p class="list-group-item-text">{{step.description}}</p>
+                <p ng-show="!step.description_data" class="list-group-item-text">{{step.description}}</p>
+                <table ng-show="step.description_data" class="table table-condensed">
+                    <tr ng-repeat="row in step.description_data track by $index">
+                        <td ng-repeat="value in row track by $index">{{value}}</td>
+                    </tr>
+                </table>
 
                 <div ng-show="step.error && step.error!=''">
                     <h3>Error:</h3>
                     <blockquote>
                         <p>{{step.error}}</p>
+                        <table ng-show="step.error_data" class="table table-condensed">
+                            <tr ng-repeat="row in step.error_data track by $index">
+                                <td ng-repeat="value in row track by $index">{{value}}</td>
+                            </tr>
+                        </table>
                     </blockquote>
                 </div>
             </li>
