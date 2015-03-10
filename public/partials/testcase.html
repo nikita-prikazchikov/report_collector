@@ -41,7 +41,7 @@
                             <dd>{{testcase.release}}</dd>
 
                             <dt>Build id</dt>
-                            <dd>{{testcase.build_id}}</dd>
+                            <dd><a href="/testcases{{testcase.build_href}}" target="_blank">{{testcase.build_id}}</a></dd>
 
                             <dt>Job name</dt>
                             <dd>{{testcase.job_name}}</dd>
@@ -66,7 +66,10 @@
                         <h4 class="list-group-item-heading">{{step.name}}</h4>
                     </div>
                     <div class="col-md-1">
-                        <a href="{{step.screenshot}}" target="_blank" style="color: inherit;" ng-show="step.screenshot && step.screenshot!=''"><span class="glyphicon glyphicon-picture"></span></a>
+                        <a href="{{step.screenshot}}" target="_blank" style="color: inherit;"
+                           ng-show="step.screenshot && step.screenshot!=''">
+                            <span class="glyphicon glyphicon-picture"></span>
+                        </a>
                     </div>
                 </div>
 

@@ -115,17 +115,22 @@ function formatTestCasesOutputTableForSummaryReport(testCases, filter) {
 }
 
 function SearchFilter(parameters) {
-    this.data = {
-        name         : parameters.name || "",
-        status       : parameters.status || "",
-        tags         : parameters.tags || "",
-        job_name     : parameters.job_name || "",
-        build_id     : parameters.build_id || "",
-        feature      : parameters.feature || "",
-        environment  : parameters.environment || "",
-        project      : parameters.project || "",
-        functionality: parameters.functionality || "",
-        release      : parameters.release || ""
+    if (parameters) {
+        this.data = {
+            name         : parameters.name || "",
+            status       : parameters.status || "",
+            tags         : parameters.tags || "",
+            job_name     : parameters.job_name || "",
+            build_id     : parameters.build_id || "",
+            feature      : parameters.feature || "",
+            environment  : parameters.environment || "",
+            project      : parameters.project || "",
+            functionality: parameters.functionality || "",
+            release      : parameters.release || ""
+        }
+    }
+    else {
+        this.data = {};
     }
 }
 SearchFilter.prototype.setStatus = function (value) {

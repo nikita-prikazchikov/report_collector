@@ -22,6 +22,11 @@ reportControllers.controller('TestCaseController', ['$scope', '$routeParams', 'T
     $scope.testcase = TestCases.get({id: $routeParams.id}, function () {
         for (var i = 0; i < $scope.testcase.steps.length; i++) {
             var step = $scope.testcase.steps[i];
+            var filter = new SearchFilter(null);
+
+            $scope.testcase.build_href = filter.toUrl(filter.extend({
+                build_id: $scope.testcase.build_id
+            }));
             if (step.description && step.description.indexOf("|") != -1) {
                 step.description_data = [];
                 var rows = step.description.trim().split('\r\n');
